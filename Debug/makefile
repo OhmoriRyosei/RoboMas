@@ -20,6 +20,10 @@ RM := rm -rf
 -include Drivers/STM32F7xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include CANLib_RoboMas/CAN_C620_System/subdir.mk
+-include CANLib_RoboMas/CAN_C620/subdir.mk
+-include CANLib/Defines/subdir.mk
+-include CANLib/CAN_Main/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

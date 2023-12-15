@@ -22,6 +22,10 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+CANLib/CAN_Main \
+CANLib/Defines \
+CANLib_RoboMas/CAN_C620 \
+CANLib_RoboMas/CAN_C620_System \
 Core/Src \
 Core/Startup \
 Drivers/STM32F7xx_HAL_Driver/Src \
