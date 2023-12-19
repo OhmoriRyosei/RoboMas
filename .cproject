@@ -60,6 +60,7 @@
 									<listOptionValue builtIn="false" value="../CANLib/CAN_Main"/>
 									<listOptionValue builtIn="false" value="../CANLib_RoboMaster/CAN_C620"/>
 									<listOptionValue builtIn="false" value="../CANLib_RoboMaster/CAN_C620_Def"/>
+									<listOptionValue builtIn="false" value="../CANLib_RoboMaster/CAN_C620_System"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.118585249" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
