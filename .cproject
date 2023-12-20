@@ -94,11 +94,13 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CANLib/CAN_Main"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CANLib_RoboMas/CAN_C620_Def"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CANLib_RoboMas/CAN_C620_System"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CANLib/Defines"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CANLib_RoboMas"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="CANLib_RoboMas/CAN_C620"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="USB_DEVICE"/>
 					</sourceEntries>
 				</configuration>
