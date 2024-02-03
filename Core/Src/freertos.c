@@ -37,11 +37,14 @@
 #include <std_msgs/msg/float64.h>
 #include <std_msgs/msg/int32_multi_array.h>
 #include <geometry_msgs/msg/twist.h>
+#include <geometry_msgs/msg/quaternion.h>
 #include <actuator_status_msg/msg/three_bools.h>
 #include <usart.h>
 
 #include "can_utils.h"
 #include "can.h"
+
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -125,15 +128,37 @@ void pub_timer_callback_enc1(rcl_timer_t * timer, int64_t last_call_time){
     }
 }
 
-void subscription_callback(const void * msgin)
+void pub_timer_callback_enc2(rcl_timer_t * timer, int64_t last_call_time){
+    RCLC_UNUSED(last_call_time);
+    std_msgs__msg__Float64 data_msg;
+
+    if (timer != NULL) {
+
+
+
+    }
+}
+
+void pub_timer_callback_line(rcl_timer_t * timer, int64_t last_call_time){
+    RCLC_UNUSED(last_call_time);
+    geometry_msgs__msg__Quaternion line_sensor;
+
+    if (timer != NULL) {
+
+
+
+    }
+}
+
+void subscription_callback_air(const void * msgin)
 {
 	 // Cast received message to used type
-	  const actuator_status_msg__msg__ThreeBools *status = (const actuator_status_msg__msg__ThreeBools *)msgin;
-	  Air_PortStatus_Typedef air_status[3];
+	  const actuator_status_msg__msg__ThreeBools * status = (const actuator_status_msg__msg__ThreeBools *)msgin;
+	  static Air_PortStatus_Typedef air_status[3];
 
-	  air_status[0] = (status.c) ? AIR_ON : AIR_OFF;
-	  air_status[1] = (status.p) ? AIR_ON : AIR_OFF;
-	  air_status[2] = (status.l) ? AIR_ON : AIR_OFF;
+	  air_status[0] = (status->c) ? AIR_ON : AIR_OFF;
+	  air_status[1] = (status->p) ? AIR_ON : AIR_OFF;
+	  air_status[2] = (status->l) ? AIR_ON : AIR_OFF;
 
 	  if(NUM_OF_AIR>0){
 		  for(int i=0;i<NUM_OF_AIR;i++){
@@ -144,6 +169,70 @@ void subscription_callback(const void * msgin)
 		  }
 	  }
 }
+
+void subscription_callback_mcmd(const void * msgin)
+{
+	 // Cast received message to used type
+	  const std_msgs__msg__Int32MultiArray * rotvels = (const std_msgs__msg__Int32MultiArray *)msgin;
+	  static int rpm[3];	//発射用モーター３つ
+
+	  //rpm =  (float)(rotvels->data);
+
+	  for(int i=0;i<3;i++){
+	//	  rpm[i] = (float)(rotvels->data[i]);
+		  MCMD_SetTarget(&(mcmd_handlers[i]), rpm[i]);
+	  }
+
+}
+
+void subscription_callback_table(const void * msgin)
+{
+	 // Cast received message to used type
+	  const std_msgs__msg__Float64 * table = (const std_msgs__msg__Float64 *)msgin;
+	  static float table_pos;
+	  table_pos = table->data;
+
+	  MCMD_SetTarget(&(mcmd_handlers[3]), table_pos);
+
+}
+
+void subscription_callback_z(const void * msgin)
+{
+	 // Cast received message to used type
+	  const std_msgs__msg__Float64 * zrot = (const std_msgs__msg__Float64 *)msgin;
+	  static float zrot_rad;
+	  zrot_rad = zrot->data;
+
+	  MCMD_SetTarget(&(mcmd_handlers[4]), zrot_rad);
+
+}
+
+void subscription_callback(const void * msgin)
+{
+	 // Cast received message to used type
+	  const geometry_msgs__msg__Twist * twist = (const geometry_msgs__msg__Twist *)msgin;
+	  static float _mros_target[4]; //TODO: 4は手打ち
+	  const float R = 100.0f; //中心からオムニまでの距離
+	  const float r = 5.0f;  //タイヤの半径
+	  float theta = 0.0f; //TODO fbから持ってくる
+
+	  for(int i=0;i<4;i++){
+//		  _mros_target[i] = ((-sinf(theta+(M_PI*(float)i))*twist.linear.x)+(cosf(theta+(M_PI*(float)i))*twist.linear.y)+R*twist.angular.z)/r;
+		  C620_SetTarget(&c620_dev_info_global[i], _mros_target[i]);
+	  }
+
+}
+
+//subscriber template
+
+//void subscription_callback(const void * msgin)
+//{
+//	 // Cast received message to used type
+//	  const std_msgs__msg__Int32MultiArray * rotvels = (const std_msgs__msg__Int32MultiArray *)msgin;
+//
+//
+//
+//}
 
 /* USER CODE END FunctionPrototypes */
 

@@ -150,6 +150,8 @@ int main(void)
   MX_USART3_UART_Init();
   MX_ETH_Init();
   MX_CAN1_Init();
+  MX_CAN2_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   setbuf(stdout, NULL);
   setbuf(stderr, NULL);
@@ -171,8 +173,142 @@ int main(void)
    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);  // LD2 (Blue) ON
 
 //
-// MCMDは搭載していない
+// MCMDは2搭載
 //
+   if(NUM_OF_MCMD3 != 0) {
+       // 発射1
+       mcmd_handlers[0].device.node_type = NODE_MCMD3;
+       mcmd_handlers[0].device.node_id = 1;
+       mcmd_handlers[0].device.device_num = 0;
+       mcmd_handlers[0].ctrl_param.ctrl_type = MCMD_CTRL_VEL;
+       mcmd_handlers[0].ctrl_param.feedback = MCMD_FB_ENABLE;
+       mcmd_handlers[0].fb_type = MCMD_FB_POS;
+       mcmd_handlers[0].limit_sw_type = LIMIT_SW_NO;
+       mcmd_handlers[0].enc_dir = MCMD_DIR_FW;
+       mcmd_handlers[0].rot_dir = MCMD_DIR_FW;
+       mcmd_handlers[0].calib = CALIBRATION_DISABLE;
+       mcmd_handlers[0].ctrl_param.gravity_compensation = GRAVITY_COMPENSATION_DISABLE;
+       mcmd_handlers[0].calib_duty = -0.6f;
+       mcmd_handlers[0].quant_per_unit = 90.0f / 1024.0f;
+       mcmd_handlers[0].ctrl_param.accel_limit = ACCEL_LIMIT_ENABLE;
+       mcmd_handlers[0].ctrl_param.accel_limit_size = 5.0f;
+       mcmd_handlers[0].ctrl_param.PID_param.kp = 0.12f;
+
+       MCMD_init(&mcmd_handlers[0]);
+//       MCMD_Calib(&mcmd_handlers[0]);  // キャリブレーションを行う
+//       HAL_Delay(3000);
+       MCMD_SetTarget(&mcmd_handlers[0], 0.0f);  // 目標値(0.0)を設定
+       // TODO: 稼働限界は226mm
+       MCMD_Control_Enable(&mcmd_handlers[0]);  // 制御開始
+
+       //発射2
+       mcmd_handlers[1].device.node_type = NODE_MCMD3;
+       mcmd_handlers[1].device.node_id = 1;
+       mcmd_handlers[1].device.device_num = 1;
+       mcmd_handlers[1].ctrl_param.ctrl_type = MCMD_CTRL_VEL;
+       mcmd_handlers[1].ctrl_param.feedback = MCMD_FB_ENABLE;
+       mcmd_handlers[1].fb_type = MCMD_FB_POS;
+       mcmd_handlers[1].limit_sw_type = LIMIT_SW_NO;
+       mcmd_handlers[1].enc_dir = MCMD_DIR_FW;
+       mcmd_handlers[1].rot_dir = MCMD_DIR_FW;
+       mcmd_handlers[1].calib = CALIBRATION_DISABLE;
+       mcmd_handlers[1].ctrl_param.gravity_compensation = GRAVITY_COMPENSATION_DISABLE;
+       mcmd_handlers[1].calib_duty = -0.6f;
+       mcmd_handlers[1].quant_per_unit = 90.0f / 1024.0f;
+       mcmd_handlers[1].ctrl_param.accel_limit = ACCEL_LIMIT_ENABLE;
+       mcmd_handlers[1].ctrl_param.accel_limit_size = 5.0f;
+       mcmd_handlers[1].ctrl_param.PID_param.kp = 0.12f;
+
+       MCMD_init(&mcmd_handlers[1]);
+//       MCMD_Calib(&mcmd_handlers[1]);  // キャリブレーションを行う
+//       HAL_Delay(3000);
+       MCMD_SetTarget(&mcmd_handlers[1], 0.0f);  // 目標値(0.0)を設定
+       // TODO: 稼働限界は226mm
+       MCMD_Control_Enable(&mcmd_handlers[1]);  // 制御開始
+
+       //発射3
+       mcmd_handlers[2].device.node_type = NODE_MCMD3;
+       mcmd_handlers[2].device.node_id = 2;
+       mcmd_handlers[2].device.device_num = 0;
+       mcmd_handlers[2].ctrl_param.ctrl_type = MCMD_CTRL_POS;
+       mcmd_handlers[2].ctrl_param.feedback = MCMD_FB_ENABLE;
+       mcmd_handlers[2].fb_type = MCMD_FB_POS;
+       mcmd_handlers[2].limit_sw_type = LIMIT_SW_NO;
+       mcmd_handlers[2].enc_dir = MCMD_DIR_FW;
+       mcmd_handlers[2].rot_dir = MCMD_DIR_FW;
+       mcmd_handlers[2].calib = CALIBRATION_DISABLE;
+       mcmd_handlers[2].ctrl_param.gravity_compensation = GRAVITY_COMPENSATION_DISABLE;
+       mcmd_handlers[2].calib_duty = -0.6f;
+       mcmd_handlers[2].quant_per_unit = 90.0f / 1024.0f;
+       mcmd_handlers[2].ctrl_param.accel_limit = ACCEL_LIMIT_ENABLE;
+       mcmd_handlers[2].ctrl_param.accel_limit_size = 5.0f;
+       mcmd_handlers[2].ctrl_param.PID_param.kp = 0.12f;
+
+       MCMD_init(&mcmd_handlers[2]);
+//       MCMD_Calib(&mcmd_handlers[2]);  // キャリブレーションを行う
+//       HAL_Delay(3000);
+       MCMD_SetTarget(&mcmd_handlers[2], 0.0f);  // 目標値(0.0)を設定
+       // TODO: 稼働限界は226mm
+       MCMD_Control_Enable(&mcmd_handlers[2]);  // 制御開始
+
+       //
+       //turntable
+       //
+
+       mcmd_handlers[3].device.node_type = NODE_MCMD3;
+       mcmd_handlers[3].device.node_id = 2;
+       mcmd_handlers[3].device.device_num = 1;
+       mcmd_handlers[3].ctrl_param.ctrl_type = MCMD_CTRL_POS;
+       mcmd_handlers[3].ctrl_param.feedback = MCMD_FB_ENABLE;
+       mcmd_handlers[3].fb_type = MCMD_FB_POS;
+       mcmd_handlers[3].limit_sw_type = LIMIT_SW_NO;
+       mcmd_handlers[3].enc_dir = MCMD_DIR_FW;
+       mcmd_handlers[3].rot_dir = MCMD_DIR_FW;
+       mcmd_handlers[3].calib = CALIBRATION_ENABLE;
+       mcmd_handlers[3].ctrl_param.gravity_compensation = GRAVITY_COMPENSATION_DISABLE;
+       mcmd_handlers[3].calib_duty = -0.6f;
+       mcmd_handlers[3].quant_per_unit = 90.0f / 1024.0f;
+       mcmd_handlers[3].ctrl_param.accel_limit = ACCEL_LIMIT_ENABLE;
+       mcmd_handlers[3].ctrl_param.accel_limit_size = 5.0f;
+       mcmd_handlers[3].ctrl_param.PID_param.kp = 0.12f;
+
+       MCMD_init(&mcmd_handlers[3]);
+       MCMD_Calib(&mcmd_handlers[3]);  // キャリブレーションを行う
+       HAL_Delay(3000);
+       MCMD_SetTarget(&mcmd_handlers[3], 0.0f);  // 目標値(0.0)を設定
+       // TODO: 稼働限界は226mm
+       MCMD_Control_Enable(&mcmd_handlers[3]);  // 制御開始
+
+       //
+      //z_rotation
+       //
+
+       mcmd_handlers[4].device.node_type = NODE_MCMD3;
+       mcmd_handlers[4].device.node_id = 3;
+       mcmd_handlers[4].device.device_num = 0;
+       mcmd_handlers[4].ctrl_param.ctrl_type = MCMD_CTRL_POS;
+       mcmd_handlers[4].ctrl_param.feedback = MCMD_FB_ENABLE;
+       mcmd_handlers[4].fb_type = MCMD_FB_POS;
+       mcmd_handlers[4].limit_sw_type = LIMIT_SW_NO;
+       mcmd_handlers[4].enc_dir = MCMD_DIR_FW;
+       mcmd_handlers[4].rot_dir = MCMD_DIR_FW;
+       mcmd_handlers[4].calib = CALIBRATION_ENABLE;
+       mcmd_handlers[4].ctrl_param.gravity_compensation = GRAVITY_COMPENSATION_DISABLE;
+       mcmd_handlers[4].calib_duty = -0.6f;
+       mcmd_handlers[4].quant_per_unit = 90.0f / 1024.0f;
+       mcmd_handlers[4].ctrl_param.accel_limit = ACCEL_LIMIT_ENABLE;
+       mcmd_handlers[4].ctrl_param.accel_limit_size = 5.0f;
+       mcmd_handlers[4].ctrl_param.PID_param.kp = 0.12f;
+
+       MCMD_init(&mcmd_handlers[4]);
+       MCMD_Calib(&mcmd_handlers[4]);  // キャリブレーションを行う
+       HAL_Delay(3000);
+       MCMD_SetTarget(&mcmd_handlers[4], 0.0f);  // 目標値(0.0)を設定
+       // TODO: 稼働限界は226mm
+       MCMD_Control_Enable(&mcmd_handlers[4]);  // 制御開始
+
+   }
+
 
    // air cylinder
 
