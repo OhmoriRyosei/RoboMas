@@ -117,38 +117,40 @@ const osTimerAttr_t Timer01_attributes = {
 /* USER CODE BEGIN FunctionPrototypes */
 
 
-void pub_timer_callback_enc1(rcl_timer_t * timer, int64_t last_call_time){
-    RCLC_UNUSED(last_call_time);
-    std_msgs__msg__Float64 data_msg;
+//TODO:publisher callback の必要性の検討
 
-    if (timer != NULL) {
-
-
-
-    }
-}
-
-void pub_timer_callback_enc2(rcl_timer_t * timer, int64_t last_call_time){
-    RCLC_UNUSED(last_call_time);
-    std_msgs__msg__Float64 data_msg;
-
-    if (timer != NULL) {
-
-
-
-    }
-}
-
-void pub_timer_callback_line(rcl_timer_t * timer, int64_t last_call_time){
-    RCLC_UNUSED(last_call_time);
-    geometry_msgs__msg__Quaternion line_sensor;
-
-    if (timer != NULL) {
-
-
-
-    }
-}
+//void pub_timer_callback_enc1(rcl_timer_t * timer, int64_t last_call_time){
+//    RCLC_UNUSED(last_call_time);
+//    std_msgs__msg__Float64 data_msg;
+//
+//    if (timer != NULL) {
+//
+//
+//
+//    }
+//}
+//
+//void pub_timer_callback_enc2(rcl_timer_t * timer, int64_t last_call_time){
+//    RCLC_UNUSED(last_call_time);
+//    std_msgs__msg__Float64 data_msg;
+//
+//    if (timer != NULL) {
+//
+//
+//
+//    }
+//}
+//
+//void pub_timer_callback_line(rcl_timer_t * timer, int64_t last_call_time){
+//    RCLC_UNUSED(last_call_time);
+//    geometry_msgs__msg__Quaternion line_sensor;
+//
+//    if (timer != NULL) {
+//
+//
+//
+//    }
+//}
 
 void subscription_callback_air(const void * msgin)
 {
